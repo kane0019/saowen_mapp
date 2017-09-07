@@ -52,3 +52,5 @@ def novel_page(novel_link):
             review_info_review = reviews.find_all('span','p')
             print(review_info_user)
             print(review_info_review)
+s = input('link: \n')
+novel_page(s)

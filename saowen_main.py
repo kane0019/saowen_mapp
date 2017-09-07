@@ -18,7 +18,7 @@ print ("{}{}".format("Directory changed successfully", retval))
 
 page = requests.get('http://saowen.net/novels/view/17450',auth = None)
 
-with open('test.html','wb') as raw_page:
+with open('test.html','w') as raw_page:
     raw_page.write(page.content)
 
 with open('test.html','r') as content_source:
