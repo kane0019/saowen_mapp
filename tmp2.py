@@ -2,7 +2,7 @@ import os,base64,re
 import requests
 from bs4 import BeautifulSoup
 
-def novel_page(novel_link):
+def novel_snapshot_get_page(novel_link):
 
         page = requests.get(novel_link,allow_redirects=False)
         # 页面不存在被重定向时不执行搜索
@@ -41,14 +41,10 @@ def novel_page(novel_link):
                 print ('{}{}'.format('总评： ','暂无评分'))
             except:
                 print ('Something goes wrong')
+            '''
             try: 
                 print('{}{}'.format('首发: ',soup.find('a',target="_blank",class_ = "site-alias")['href']))
             except:
                 print('首发：  暂无信息，姑娘你来添加吧。')
-
-            reviews = soup.find('ul', id='novel-reviews')
-            print(reviews)
-            review_info_user = reviews.find('a',user_id=True).text
-            review_info_review = reviews.find_all('span','p')
-            print(review_info_user)
-            print(review_info_review)
+            '''
+# novel_snapshot('http://saowen.net/novels/view/42867')
