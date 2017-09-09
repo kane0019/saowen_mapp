@@ -1,10 +1,11 @@
 import os,base64,re
 import requests
+from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
 
-def novel_snapshot_get_page(novel_link):
+def novel_snapshot_get_page(novel_link,session,headers):
 
-        page = requests.get(novel_link,allow_redirects=False)
+        page = session.get(novel_link,headers=headers,allow_redirects=False)
         # 页面不存在被重定向时不执行搜索
         if page.status_code == 302:
             return 302

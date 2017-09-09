@@ -1,10 +1,11 @@
 import os,base64,re
 import urllib,requests
+from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
 
-def novel_reviews_get_content(reviews_link):
+def novel_reviews_get_content(reviews_link,session,headers):
     white_space = '         '
-    page = requests.get(reviews_link)
+    page = session.get(reviews_link,headers=headers)
     soup = BeautifulSoup(page.content,'lxml')
     reviews_list = soup.find_all('div', class_='statusitem')
     for reviews in reviews_list:
