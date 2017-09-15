@@ -1,13 +1,12 @@
 import os,base64,re
-import urllib,requests
-from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
 
 def novel_reviews_get_content(reviews_link,session,headers):
     white_space = '         '
-    page = session.get(reviews_link,headers=headers)
+    page = session.get(reviews_link,headers=headers,)
     soup = BeautifulSoup(page.content,'lxml')
     reviews_list = soup.find_all('div', class_='statusitem')
+    review_count = 0
     for reviews in reviews_list:
         review_info_user = reviews.find('a',user_id=True).text
         review_info_review = reviews.find('blockquote')
@@ -20,4 +19,6 @@ def novel_reviews_get_content(reviews_link,session,headers):
         print ('{}{}{}{}{}{}{}{}'.format(review_info_user,white_space,white_space,'有用：',review_info_pos_count,white_space,'没用：',review_info_neg_count))
         print (''.join(review_output))
         print('\n')
-
+        review_count += 1
+        if review_count == 3:
+            break
