@@ -1,0 +1,83 @@
+# Kivy_File  front_login.py
+
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#: import get_color_from_hex kivy.utils.get_color_from_hex
+
+Screen_M:
+    Login_Screen:
+
+<Login_Screen>:
+    FloatLayout:
+        canvas.before:
+            Color: 
+                rgb: 1,1,1
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: '扫文小院'
+            font_name: 'fonts/ARIALUNI.TTF'
+            font_size: 70
+            color: get_color_from_hex('#4499ee')
+            pos_hint:{"y":.5}
+            size_hint:(1,0.7)
+        GridLayout:
+            cols: 2
+            rows: 1
+            size_hint: (.5, .05)
+            pos_hint: {'x': 0.25, 'y': 0.5}
+            canvas.before:
+                Color:
+                    rgb: 1,1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size            
+
+            Label:
+                text: '邮箱:'
+                font_name: 'fonts/ARIALUNI.TTF'
+                font_size: 25
+                size_hint: .1, 1
+                color: 0,0,0            
+            TextInput:
+                multiline: False
+                size_hint: (.25,0.05)
+                font_size: 15
+        GridLayout:
+            cols: 2
+            rows: 1
+            size_hint: (.5, .05)
+            pos_hint: {'x': 0.25, 'y': 0.4}
+            canvas.before:
+                Color:
+                    rgb: 1,1,1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size            
+
+            Label:
+                text: '密码:'
+                font_name: 'fonts/ARIALUNI.TTF'
+                font_size: 25
+                size_hint: .1, 1
+                color: 0,0,0            
+            TextInput:
+                multiline: False
+                size_hint: (.25,0.05)
+                font_size: 15
+                password: True
+        
+        Button:
+            text: '登录'
+            color: 0,0,0
+            font_name: 'fonts/ARIALUNI.TTF'
+            font_size: 20
+            size_hint: .1, .05
+            pos_hint: {'x':.45,'y':.3}
+            background_normal: ''
+            background_color: get_color_from_hex('#4499ee')
+            #on_release: app.root.current = 'main' 
+
+
+
+                

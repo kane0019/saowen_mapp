@@ -10,16 +10,17 @@ from kivy.uix.textinput import TextInput
 
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
-class ShoppingListScreen(Screen):
+class Login_Screen(Screen):
     pass
 
-class theScreenManager(ScreenManager):
+class Screen_M(ScreenManager):
     pass
 
-root_widget = Builder.load_file('front_login.kv')
+
 
 class front_login(App):
     def build(self):
+        root_widget = Builder.load_file('login_page.kv')
         return root_widget
 
 if __name__ == "__main__":
