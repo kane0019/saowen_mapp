@@ -23,8 +23,8 @@ def login_session(log,pwd):
         postdata = {'data[User][email]': log,'data[User][password]': pwd,'data[User][remember]': 1}
         login_page = session.post(post_url, data=postdata,headers = headers)
         login_code = login_page.status_code
-        print(login_code)
-        print("1")
+        #print(login_page)
+        #print(login_code)
         session.cookies.save()
         return login_code,session,headers
     except:

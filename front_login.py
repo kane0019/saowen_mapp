@@ -13,10 +13,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 class Login_Screen(Screen):
     pass
 
-class Screen_M(ScreenManager):
-    pass
-
-
 
 class front_login(App):
     def build(self):

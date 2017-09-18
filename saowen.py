@@ -8,8 +8,7 @@ from requests.auth import HTTPBasicAuth
 from login import login_session
 
 hostdoamin = 'http://saowen.net'
-login_code,session,headers = login_session('ad000913@hotmail.com','Kane0019')
-print(login_code)
+# login_code,session,headers = login_session('ad000913@hotmail.com','Kane0019')
 t = input('搜索类型： 正文／标签 \n')
 s = input('搜索字段： ')
 # Unicode转码支持中文
