@@ -1,11 +1,13 @@
-# Kivy_File  front_login.py
+# Kivy_File  for login_page.py
 
 #:import FadeTransition kivy.uix.screenmanager.FadeTransition
-#: import get_color_from_hex kivy.utils.get_color_from_hex
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+
+#:include connected.kv
 
 
 
-Login_Screen:
+<Login_Screen>:
     FloatLayout:
         canvas.before:
             Color: 
@@ -39,6 +41,7 @@ Login_Screen:
                 size_hint: .1, 1
                 color: 0,0,0            
             TextInput:
+                id: login
                 multiline: False
                 size_hint: (.25,0.05)
                 font_size: 15
@@ -61,6 +64,7 @@ Login_Screen:
                 size_hint: .1, 1
                 color: 0,0,0            
             TextInput:
+                id: password
                 multiline: False
                 size_hint: (.25,0.05)
                 font_size: 15
@@ -75,7 +79,7 @@ Login_Screen:
             pos_hint: {'x':.45,'y':.3}
             background_normal: ''
             background_color: get_color_from_hex('#4499ee')
-            #on_release: app.root.current = 'main' 
+            on_release: root.auth(login.text, password.text)
 
 
 

@@ -1,4 +1,4 @@
-import os,base64,re
+import os,base64,re,json
 import requests
 from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
@@ -20,27 +20,33 @@ def novel_snapshot_get_page(novel_link,session,headers):
             for i in range (9):
                 novel_info_output.append(novel_info.text)
                 novel_info = novel_info.find_next_sibling('li')
-            print ('  '.join(novel_info_output))
+            novel_info_details = ('  '.join(novel_info_output))
+            print (novel_info_details)
 
             rate_info = soup.find('div', id='rate-info', title='评价信息')
             try:
-                print ('{}{}'.format('星级： ',rate_info.find('span',class_='ratestar').text))
+                star_info = rate_info.find('span',class_='ratestar').text
+                print ('{}{}'.format('星级： ',star_info))
             except AttributeError:
-                print ('{}{}'.format('星级： ','暂无评分'))
+                star_info = '暂无评分'
+                print ('{}{}'.format('星级： ',star_info))
             try:
-                print ('{}{}'.format('平均分： ',rate_info.find('span',class_='ratenumber').text))
+                ave_info = rate_info.find('span',class_='ratenumber').text
+                print ('{}{}'.format('平均分： ',ave_info))
             except AttributeError:
-                print ('{}{}'.format('平均分： ','暂无评分'))
-            except:
-                print ('Something goes wrong')
+                ave_info = '暂无评分'
+                print ('{}{}'.format('平均分： ',ave_info))
             try:
-                print ('{}{}'.format('总评： ',rate_info.find('span',class_='ratedesc').text))
+                sum_info = rate_info.find('span',class_='ratedesc').text
+                print ('{}{}'.format('总评： ',sum_info))
             except AttributeError:
-                print ('{}{}'.format('总评： ','暂无评分'))
+                sum_info = '暂无评分'
+                print ('{}{}'.format('总评： ',sum_info))
             '''
             try: 
                 print('{}{}'.format('首发: ',soup.find('a',target="_blank",class_ = "site-alias")['href']))
             except:
                 print('首发：  暂无信息，姑娘你来添加吧。')
             '''
+        return ({'title':title,'author':author,'novel_info':novel_info_details, 'star':star_info,'ave':ave_info,'sum':sum_info})
 # novel_snapshot('http://saowen.net/novels/view/42867')

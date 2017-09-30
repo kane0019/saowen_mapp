@@ -102,7 +102,7 @@ class Login_Screen(FloatLayout):
                     size_hint=(0.3, 0.3),
                     auto_dismiss=True)
                 popup.open()
-        elif usernmae != '':
+        elif username != '':
             popup = Popup(title="错误",
                 content=Label(text='请填写密码'),
                 size=(100, 100),
