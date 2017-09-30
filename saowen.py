@@ -53,13 +53,16 @@ def saowen_main(session,headers):
     soup = BeautifulSoup(page.content,'lxml')
 
     # HTML5的tag 包含 ‘——’ 需用attrs支持
-    novel_list = soup.find('div',id='novel-list').find_all(attrs={"data-novelid": True})
+    novel_list = soup.find('div',id='novel-list').find_all(attrs={'data-novelid': True})
     novel_record_list = []
+    novel_reviews_list = []
     for hit in novel_list:
         novel_link=('{}{}'.format(hostdoamin,hit.find('a',class_='novellink',novel_id=True)['href']))
+        novel_id=hit['data-novelid']
         # reviews_link = ('{}{}{}{}'.format(hostdoamin,'/readstatuses/novelReviews/',hit.find('a',class_='novellink')['novel_id'],'/sort:p_ratio/direction:DESC'))
-        novel_snapshot = novel_snapshot_get_page(novel_link,session,headers)
+        novel_snapshot = novel_snapshot_get_page(novel_link,session,headers,novel_id)
         novel_record_list.append(novel_snapshot)
+        # novel_reviews_list.append(reviews_link)
         if novel_snapshot == 302:
             pass
         else:

@@ -1,8 +1,9 @@
 import os,base64,re
 from bs4 import BeautifulSoup
 
-def novel_reviews_get_content(reviews_link,session,headers):
+def novel_reviews_get_content(novel_id,session,headers):
     white_space = '         '
+    review_link=('{}{}'.format('http://saowen.net/readstatuses/novelReviews/',novel_id))
     page = session.get(reviews_link,headers=headers,)
     soup = BeautifulSoup(page.content,'lxml')
     reviews_list = soup.find_all('div', class_='statusitem')

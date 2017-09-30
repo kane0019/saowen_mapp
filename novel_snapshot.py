@@ -3,7 +3,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 from bs4 import BeautifulSoup
 
-def novel_snapshot_get_page(novel_link,session,headers):
+def novel_snapshot_get_page(novel_link,session,headers,novel_id):
 
         page = session.get(novel_link,headers=headers,allow_redirects=False)
         # 页面不存在被重定向时不执行搜索
@@ -16,12 +16,20 @@ def novel_snapshot_get_page(novel_link,session,headers):
             print(('{}{}'.format("书名： ", title))+'       '+('{}{}'.format("作者： ", author)))
 
             novel_info = soup.find('div', id='novel-info',title='作品信息').find('ul').find('li')
-            novel_info_output = []
+            novel_info_p1 = []
+            novel_info_p2 = []
             for i in range (9):
-                novel_info_output.append(novel_info.text)
-                novel_info = novel_info.find_next_sibling('li')
-            novel_info_details = ('  '.join(novel_info_output))
-            print (novel_info_details)
+                if i <= 5:
+                    novel_info_p1.append(novel_info.text)
+                    novel_info = novel_info.find_next_sibling('li')
+                else:
+                    novel_info_p2.append(novel_info.text)
+                    novel_info = novel_info.find_next_sibling('li')
+            novel_info_output_p1 = ('  '.join(novel_info_p1))
+            novel_info_output_p2 = ('  '.join(novel_info_p2))
+
+            print (novel_info_output_p1)
+            print (novel_info_output_p2)
 
             rate_info = soup.find('div', id='rate-info', title='评价信息')
             try:
@@ -48,5 +56,6 @@ def novel_snapshot_get_page(novel_link,session,headers):
             except:
                 print('首发：  暂无信息，姑娘你来添加吧。')
             '''
-        return ({'title':title,'author':author,'novel_info':novel_info_details, 'star':star_info,'ave':ave_info,'sum':sum_info})
+        return ({'title':title,'author':author,'novel_info_p1':novel_info_output_p1, 'novel_info_p2':novel_info_output_p2,'star':star_info,'ave':ave_info,'sum':sum_info,'novel_id':novel_id})
+
 # novel_snapshot('http://saowen.net/novels/view/42867')
