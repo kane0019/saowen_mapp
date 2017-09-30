@@ -62,7 +62,6 @@ def saowen_main(session,headers):
         # reviews_link = ('{}{}{}{}'.format(hostdoamin,'/readstatuses/novelReviews/',hit.find('a',class_='novellink')['novel_id'],'/sort:p_ratio/direction:DESC'))
         novel_snapshot = novel_snapshot_get_page(novel_link,session,headers,novel_id)
         novel_record_list.append(novel_snapshot)
-        # novel_reviews_list.append(reviews_link)
         if novel_snapshot == 302:
             pass
         else:
