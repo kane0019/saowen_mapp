@@ -20,7 +20,7 @@ def login_session(log,pwd):
             except:
                 raise
         post_url = 'http://saowen.net/users/login'
-        postdata = {'data[User][email]': log,'data[User][password]': pwd,'data[User][remember]': 1}
+        postdata = {'data[User][email]': log,'data[User][password]': pwd,'data[User][remember]': 0,'data[User][remember]': 1}
         login_page = session.post(post_url, data=postdata,headers = headers)
         login_code = login_page.status_code
         #print(login_page)

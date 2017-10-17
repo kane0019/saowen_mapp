@@ -10,7 +10,10 @@ def novel_snapshot_get_page(novel_link,session,headers,novel_id):
         if page.status_code == 302:
             return 302
         else:
-            soup = BeautifulSoup(page.content,'lxml')
+            try:
+                soup = BeautifulSoup(page.content,'lxml')
+            except AttributeError:
+                return ('not_find')
             title = soup.find('div',id='main').find('h1').text
             author = soup.find('a',author_id = True).text
             print(('{}{}'.format("书名： ", title))+'       '+('{}{}'.format("作者： ", author)))
@@ -50,12 +53,28 @@ def novel_snapshot_get_page(novel_link,session,headers,novel_id):
             except AttributeError:
                 sum_info = '暂无评分'
                 print ('{}{}'.format('总评： ',sum_info))
+            try:
+                tags = soup.find('div',id='noveltags').find_all('span',class_='noveltag')
+                tag_list=[]
+                for tag in tags:
+                    tag_list.append(tag.text)
+                '''
+                    tag_text = tag.find('a').text
+                    tag_count = tag.text
+                    print ('{}{}'.format(tag_text,tag_count))
+                    tag_text_list.append(tag_text)
+                    tag_count_list.append(tag_count)
+                '''
+            except AttributeError:
+                    tag_list =[]
+                    print ('暂无标签')
+
             '''
             try: 
                 print('{}{}'.format('首发: ',soup.find('a',target="_blank",class_ = "site-alias")['href']))
             except:
                 print('首发：  暂无信息，姑娘你来添加吧。')
             '''
-        return ({'title':title,'author':author,'novel_info_p1':novel_info_output_p1, 'novel_info_p2':novel_info_output_p2,'star':star_info,'ave':ave_info,'sum':sum_info,'novel_id':novel_id})
+        return ({'title':title,'author':author,'novel_info_p1':novel_info_output_p1, 'novel_info_p2':novel_info_output_p2,'star':star_info,'ave':ave_info,'sum':sum_info,'novel_id':novel_id,'tags':tag_list})
 
-# novel_snapshot('http://saowen.net/novels/view/42867')
+#novel_snapshot__get_page('http://saowen.net/novels/view/42867')

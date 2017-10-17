@@ -13,7 +13,9 @@ from kivy.core.window import Window
 from kivy.uix.popup import Popup
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
+from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition
 
+import scroll_view_dev 
 import login
 
 # set default fonts
@@ -69,6 +71,7 @@ class Login_Screen(FloatLayout):
 
     def __init__(self, **kwargs):
         super(Login_Screen, self).__init__(**kwargs)
+        self.cols = 1
         self.login_username = username_grid()
         self.login_password = password_grid()
         self.label1 = Label(text='扫文小院',color=get_color_from_hex('#4499ee'),pos_hint={'y':.6},size_hint=(1,.4),font_size=70)
@@ -89,12 +92,15 @@ class Login_Screen(FloatLayout):
             login_code,session,headers= login.login_session(username,password)
             print(login_code)
             if login_code == 200:
+        
                 popup = Popup(title="成功",
                     content=Label(text="欢迎"),
                     size=(100, 100),
                     size_hint=(0.3, 0.3),
                     auto_dismiss=True)
                 popup.open()
+    
+                App.get_running_app().sm.switch_to(App.get_running_app().screen2)
             else:
                 popup = Popup(title="失败",
                     content=Label(text="用户名／密码不正确"),
@@ -122,9 +128,18 @@ class Login_Screen(FloatLayout):
         self.rect.size = self.size
 
 
+
+
 class front_login(App):
+    sm = ScreenManager(transition=FadeTransition())
+    screen1 = Screen(name='Main')
+    screen1.add_widget(Login_Screen())
+    screen2 = Screen(name='Test')
+    screen2.add_widget(scroll_view_dev.main_display())
+    sm.add_widget(screen1)
+    sm.current = 'Main'
     def build(self):
-        return Login_Screen()
+        return self.sm
 
 if __name__ == "__main__":
     front_login().run()

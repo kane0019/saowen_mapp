@@ -5,16 +5,14 @@ from bs4 import BeautifulSoup
 from novel_snapshot import novel_snapshot_get_page
 from novel_reviews import novel_reviews_get_content
 from requests.auth import HTTPBasicAuth
-from login import login_session
 
-def saowen_main(session,headers):
+
+def saowen_main(search_item,tag_mark,session,headers):
     hostdoamin = 'http://saowen.net'
-    # login_code,session,headers = login_session('ad000913@hotmail.com','Kane0019')
-    t = input('搜索类型： 正文／标签 \n')
-    s = input('搜索字段： ')
+    s = search_item
     # Unicode转码支持中文
     s = urllib.parse.quote(s)
-    if t == '正文':
+    if tag_mark == 0:
         page = session.get('http://saowen.net/novels/search?q=' + s,headers=headers,allow_redirects=True)
         # Redirection Check
         if page.history:
@@ -53,9 +51,13 @@ def saowen_main(session,headers):
     soup = BeautifulSoup(page.content,'lxml')
 
     # HTML5的tag 包含 ‘——’ 需用attrs支持
-    novel_list = soup.find('div',id='novel-list').find_all(attrs={'data-novelid': True})
+    try:
+        novel_list = soup.find('div',id='novel-list').find_all(attrs={'data-novelid': True})
+    except AttributeError:
+        novel_list=[]
     novel_record_list = []
     novel_reviews_list = []
+    novel_tag_list= []
     for hit in novel_list:
         novel_link=('{}{}'.format(hostdoamin,hit.find('a',class_='novellink',novel_id=True)['href']))
         novel_id=hit['data-novelid']
@@ -64,14 +66,22 @@ def saowen_main(session,headers):
         novel_record_list.append(novel_snapshot)
         if novel_snapshot == 302:
             pass
+        '''
         else:
-            for tag in hit.find_all(class_='tag-info'):
-                print ('{}{}'.format(tag.text,' '))
+            for tags in hit.find_all(class_='tag-info'):
+                tag = '{}{}'.format(tag.text,' ')
+                print(tag)
+                novel_tag_list.append(tag)
             print('\n')
+        '''
         # novel_reviews = novel_reviews_get_content(reviews_link,session,headers)
-
+    
     list_page_raw = soup.find('div',id='pages',class_='clear')
-    list_length = len(list_page_raw.find_all('span'))
+    try:
+        list_length = len(list_page_raw.find_all('span'))
+    except AttributeError:
+        print('未检索到相关内容')
+        list_length = 0
     if list_length == 0:
         print('仅有一页')
     else:
