@@ -37,8 +37,8 @@ def saowen_main(search_item,tag_mark,session,headers):
             print ("Request was not redirected")
         print (2)
     #临时文件存放原始网页，查错用
-    with open('test.html','wb') as raw_page:
-        raw_page.write(page.content)
+    # with open('test.html','wb') as raw_page:
+    #    raw_page.write(page.content)
 
     #override = input('Override url: \n')
 
